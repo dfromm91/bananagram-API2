@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import axios from "axios";
 app.use(cors({
-  origin: "https://www.dannysprojects.xyz/bananagrams/", // Your frontend origin
+  origin: "https://www.dannysprojects.xyz", // Your frontend origin
   methods: ["GET", "POST"],
   credentials: true, // Allow credentials (sessions)
 }));
@@ -188,14 +188,6 @@ function illegalWords(list) {
   });
   return illegalwords;
 }
-
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "https://www.dannysprojects.xyz/bananagrams/",
-    methods: ["GET", "POST"],
-  },
-});
 
 io.on("connection", (socket) => {
   // console.log(`User connected: ${socket.id}`);
