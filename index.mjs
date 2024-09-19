@@ -5,11 +5,48 @@ import fs from "node:fs";
 import { Server } from "socket.io";
 import cors from "cors";
 import axios from "axios";
-app.use(cors());
+app.use(cors({
+  origin: "https://www.dannysprojects.xyz/bananagrams/", // Your frontend origin
+  methods: ["GET", "POST"],
+  credentials: true, // Allow credentials (sessions)
+}));
+
 let openRooms = [];
 import wordListPath from "word-list";
 let singlePlayerRooms = 0;
 let singles = {};
+
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import passportSocketIo from "passport.socketio";
+import cookieParser from "cookie-parser";
+
+// Session configuration (ensure this matches your OAuth server)
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET || "your_secret_key",
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+  cookie: {
+    sameSite: "None", // For cross-site cookies
+    secure: process.env.NODE_ENV === "production", // Only true if using HTTPS in production
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+  },
+});
+
+// Use session and cookie parsing in WebSocket server
+app.use(cookieParser());
+app.use(sessionMiddleware);
+
+
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: 'connect.sid', // The cookie key, same as in your express session config
+  secret: process.env.SESSION_SECRET || "your_secret_key", // Your session secret
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // Same session store as OAuth
+  success: (data, accept) => { accept(null, true); }, // Successful connection
+  fail: (data, message, error, accept) => { accept(null, false); }, // Failed connection
+}));
 
 // Read the word list into an array
 const wordArray = fs.readFileSync(wordListPath, "utf8").split("\n");
@@ -146,7 +183,7 @@ function illegalWords(list) {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://www.dannysprojects.xyz/bananagrams/",
     methods: ["GET", "POST"],
   },
 });
