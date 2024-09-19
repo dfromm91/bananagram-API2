@@ -11,11 +11,15 @@
   "description": "",
   "dependencies": {
     "axios": "^1.7.7",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dictionary-en": "^4.0.0",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "nodemon": "^3.1.4",
     "nspell": "^2.1.5",
+    "passport.socketio": "^3.7.0",
     "scrabble": "^1.0.13",
     "socket.io": "^4.7.5",
     "word-list": "^4.0.0"
