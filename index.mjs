@@ -38,6 +38,13 @@ const sessionMiddleware = session({
 app.use(cookieParser());
 app.use(sessionMiddleware);
 
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "https://www.dannysprojects.xyz", // Correct CORS origin
+    methods: ["GET", "POST"],
+  },
+});
 
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,
@@ -47,6 +54,8 @@ io.use(passportSocketIo.authorize({
   success: (data, accept) => { accept(null, true); }, // Successful connection
   fail: (data, message, error, accept) => { accept(null, false); }, // Failed connection
 }));
+
+
 
 // Read the word list into an array
 const wordArray = fs.readFileSync(wordListPath, "utf8").split("\n");
