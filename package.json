@@ -23,5 +23,7 @@
     "scrabble": "^1.0.13",
     "socket.io": "^4.7.5",
     "word-list": "^4.0.0"
+     "passport": "^0.6.0",  // Add this line to install passport
+  "passport-google-oauth20": "^2.0.0" // If you're using Google OAuth
   }
 }
