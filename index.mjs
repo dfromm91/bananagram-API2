@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import axios from "axios";
 app.use(cors({
-  origin: "https://www.dannysprojects.xyz", // Your frontend origin
+  origin: "https://bananagrams.onrender.com", // Your frontend origin
   methods: ["GET", "POST"],
   credentials: true, // Allow credentials (sessions)
 }));
@@ -38,13 +38,14 @@ const sessionMiddleware = session({
 app.use(cookieParser());
 app.use(sessionMiddleware);
 
-const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://bananagrams.onrender.com", // Correct CORS origin
+    origin: "https://bananagrams.onrender.com", // Your React frontend
     methods: ["GET", "POST"],
+    credentials: true, // Allow credentials like cookies/sessions
   },
 });
+
 
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,
