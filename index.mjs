@@ -25,11 +25,11 @@ import cookieParser from "cookie-parser";
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET || "your_secret_key",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
     sameSite: "None", // For cross-site cookies
-    secure: process.env.NODE_ENV === "production", // Only true if using HTTPS in production
+    secure: true, // Only true if using HTTPS in production
     maxAge: 1000 * 60 * 60 * 24, // 1 day
   },
 });
