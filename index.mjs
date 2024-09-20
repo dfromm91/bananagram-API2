@@ -41,7 +41,7 @@ app.use(sessionMiddleware);
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://www.dannysprojects.xyz", // Correct CORS origin
+    origin: "https://bananagrams.onrender.com", // Correct CORS origin
     methods: ["GET", "POST"],
   },
 });
