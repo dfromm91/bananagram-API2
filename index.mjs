@@ -37,6 +37,7 @@ const sessionMiddleware = session({
 // Use session and cookie parsing in WebSocket server
 app.use(cookieParser());
 app.use(sessionMiddleware);
+const server = http.createServer(app); // This defines the 'server' variable
 
 const io = new Server(server, {
   cors: {
