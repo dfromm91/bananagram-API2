@@ -412,7 +412,7 @@ io.on("connection", (socket) => {
             // Skip the winner
             try {
               const lossResponse = await axios.post(
-                "http://auth-zb77.onrender.com/update-losses",
+                "https://auth-zb77.onrender.com/update-losses",
                 {
                   googleId: player, // Player's Google ID
                 }
