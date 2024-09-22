@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import axios from "axios";
 app.use(cors({
-  origin: "https://bananagrams.onrender.com", // Your frontend origin
+  origin: "https://bananagrams.onrender.com", 
   methods: ["GET", "POST"],
   credentials: true, // Allow credentials (sessions)
 }));
