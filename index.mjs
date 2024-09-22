@@ -389,7 +389,7 @@ io.on("connection", (socket) => {
 
       // connect to db and update wins:
       try {
-        const response = await axios.post("http://localhost:3001/update-wins", {
+        const response = await axios.post("https://auth-zb77.onrender.com/update-wins", {
           googleId: id, // Send the Google ID to the auth API
         });
 
@@ -412,7 +412,7 @@ io.on("connection", (socket) => {
             // Skip the winner
             try {
               const lossResponse = await axios.post(
-                "http://localhost:3001/update-losses",
+                "http://auth-zb77.onrender.com/update-losses",
                 {
                   googleId: player, // Player's Google ID
                 }
