@@ -21,29 +21,28 @@ import MongoStore from "connect-mongo";
 import passportSocketIo from "passport.socketio";
 import cookieParser from "cookie-parser";
 
-// Session configuration (ensure this matches your OAuth server)
+// Session configuration
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET || "your_secret_key",
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
-    sameSite: "None", // For cross-site cookies
-    secure: true, // Only true if using HTTPS in production
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    sameSite: "None", 
+    secure: true, 
+    maxAge: 1000 * 60 * 60 * 24, 
   },
 });
 
 // Use session and cookie parsing in WebSocket server
 app.use(cookieParser());
 app.use(sessionMiddleware);
-const server = http.createServer(app); // This defines the 'server' variable
-
+const server = http.createServer(app); 
 const io = new Server(server, {
   cors: {
-    origin: "https://bananagrams.onrender.com", // Your React frontend
+    origin: "https://bananagrams.onrender.com", 
     methods: ["GET", "POST"],
-    credentials: true, // Allow credentials like cookies/sessions
+    credentials: true, 
   },
 });
 
@@ -68,7 +67,7 @@ wordArray.forEach((word) => {
   wordDictionary[word.toLowerCase()] = true;
 });
 
-// Function to check if a word is in the word dictionary
+
 
 const rooms = {}; // This will store the state for each room, including the tile bag and individual grids
 
@@ -102,9 +101,7 @@ function initializeTileBag(single = false) {
     Z: 2,
   };
 
-  // const tileBag = {
-  //   A: 15,
-  // };
+ 
 
   if (single) {
     // Reduce the amount of each letter by half, rounding down
@@ -456,7 +453,7 @@ io.on("connection", (socket) => {
     // console.log(`User disconnected: ${socket.id}`);
     // Optionally clean up the player's data from the room
   });
-  // Server-side (Node.js with Socket.IO)
+ 
   socket.on("leaveRoom", ({ room, googleId, single }) => {
     // Logic to remove the player from the room
     const target = single ? singles : rooms;
